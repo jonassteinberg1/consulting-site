@@ -1,2 +1,3 @@
 # consulting-site
-everything related to my consulting site
+
+![architecture diagram](/img/arch-diag.png)
