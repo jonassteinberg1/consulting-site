@@ -1,0 +1,43 @@
+/devops-consulting-platform
+├── /frontend
+│   ├── /mobile-app
+│   │   ├── /src
+│   │   ├── /tests
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   └── /web-app
+│       ├── /src
+│       ├── /tests
+│       ├── package.json
+│       └── tsconfig.json
+├── /backend
+│   ├── /user-service
+│   │   ├── /src
+│   │   ├── /tests
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   ├── /shopping-cart-service
+│   │   ├── /src
+│   │   ├── /tests
+│   │   ├── go.mod
+│   │   └── go.sum
+│   ├── /checkout-service
+│   │   ├── /src
+│   │   ├── /tests
+│   │   ├── go.mod
+│   │   └── go.sum
+│   └── /consultation-service
+│       ├── /src
+│       ├── /tests
+│       ├── package.json
+│       └── tsconfig.json
+├── /infrastructure
+│   ├── /kubernetes
+│   │   ├── /user-service
+│   │   ├── /shopping-cart-service
+│   │   ├── /checkout-service
+│   │   └── /consultation-service
+│   ├── /istio
+│   └── /argocd
+└── README.md
+
