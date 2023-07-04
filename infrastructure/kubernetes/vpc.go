@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
 )
 
 func main() {
@@ -27,16 +28,37 @@ func main() {
 	svc := ec2.NewFromConfig(cfg)
 
 	// Define default VPC
-	input := ec2.CreateVpcInput{
-          CidrBlock: aws.String("10.20.0.0/16"),
+	VpcInput := &ec2.CreateVpcInput{
+		CidrBlock: aws.String("10.20.0.0/16"),
 	}
 
 	// Build vpc
-	resp, err := svc.CreateVpc(context.TODO(), &input)
+	VpcResp, err := svc.CreateVpc(context.TODO(), VpcInput)
 
 	if err != nil {
-	    log.Fatalf("failed to create vpc, %v", err)
+		log.Fatalf("failed to create vpc, %v", err)
 	}
 
-	fmt.Println(resp)
+	fmt.Println("VPC ID: ", *VpcResp.Vpc.VpcId)
+	fmt.Println("Cidr Block: ", *VpcResp.Vpc.CidrBlock)
+
+	TagsInput := &ec2.CreateTagsInput{
+		Resources: []string{*VpcResp.Vpc.VpcId},
+		Tags: []types.Tag{
+			{
+				Key:   aws.String("Name"),
+				Value: aws.String("kubernetes-devopsdriver"),
+			},
+		},
+	}
+
+	// Naming the VPC can only be done by assigning a tag of
+	// key "name"
+	_, err = svc.CreateTags(context.TODO(), TagsInput)
+
+	if err != nil {
+		log.Fatalf("failed to create vpc name tag, %v", err)
+	}
+
+	fmt.Println("VPC Name: kubernetes-devopsdriver")
 }
